@@ -8,7 +8,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(__dirname + '/src'));
 
  
-const db = require('./config/db.config.js');
+const db = require('./config/db.js');
   
 // force: true will drop the table if it already exists
 db.sequelize.sync({force: false}).then(() => {

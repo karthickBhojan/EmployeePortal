@@ -1,4 +1,4 @@
-const db = require('../../config/db.config.js');
+const db = require('../../config/db.js');
 const Employee = db.empdetails;
  
 // Post a Customer
@@ -17,7 +17,7 @@ exports.create = (req, res) => {
 	});
 };
  
-// FETCH all Customers
+// FETCH all Employee details
 exports.findAll = (req, res) => {
 	Employee.findAll().then(empdetails => {
 	  // Send all customers to Client
@@ -25,14 +25,14 @@ exports.findAll = (req, res) => {
 	});
 };
  
-// Find a Customer by Id
+// Find a employee by ID
 exports.findById = (req, res) => {	
 	Employee.findById(req.params.empId).then(employee => {
 		res.send(employee);
 	})
 };
  
-// Update a Customer
+// Update a employee detail
 exports.update = (req, res) => {
 	const id = req.params.empId;
 	Employee.update( { name: req.body.name, 
@@ -46,7 +46,7 @@ exports.update = (req, res) => {
 				   });
 };
  
-// Delete a Customer by Id
+// Delete a Employee by Id
 exports.delete = (req, res) => {
 	const id = req.params.empId;
 	Employee.destroy({
