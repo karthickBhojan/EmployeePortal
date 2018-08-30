@@ -1,0 +1,10 @@
+{
+    "name": "employee_portal",
+    "version": "1.0.0",
+    "dependencies": {
+        "bootstrap": "3.3.6",
+        "animate.css": "~3.4.0",
+        "angular": "1.4.10",
+        "angular-ui-router": "~0.2.15"  
+    }
+}

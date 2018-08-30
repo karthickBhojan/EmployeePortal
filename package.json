@@ -1,0 +1,30 @@
+{
+  "name": "employee_portal",
+  "version": "1.0.0",
+  "description": "Simple employee portal to perform CRUD operations",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/karthickBhojan/employee_portal.git"
+  },
+  "keywords": [
+    "employee_portal"
+  ],
+  "author": "karthick bhojan",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/karthickBhojan/employee_portal/issues"
+  },
+  "homepage": "https://github.com/karthickBhojan/employee_portal#readme",
+  "dependencies": {
+    "express": "~4.16.3",
+    "mysql": "~2.16.0",
+    "body-parser": "~1.4.2",
+    "method-override": "~2.0.2",
+    "mysql2": "^1.5.3",
+    "sequelize": "^4.37.6"
+  }
+}
