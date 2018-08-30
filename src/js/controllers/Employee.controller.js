@@ -1,12 +1,9 @@
 // public/js/controllers/MainCtrl.js
-angular.module('MainCtrl', []).controller('EmployeeController', function($scope,EmpService) {
+angular.module('MainCtrl', []).controller('EmployeeController', function($scope,EmpService,$timeout) {
 
-    
-    console.log("EmployeeController loaded ....");
     $scope.responseMessage = "";
 
     $scope.getValue = function(){
-    	console.log($scope.selectData);
         $scope.fetchData();
 
     	if($scope.selectData == "View"){
@@ -14,6 +11,7 @@ angular.module('MainCtrl', []).controller('EmployeeController', function($scope,
     		$scope.performDelete = false;
     		$scope.performUpdate = false;
     		$scope.performAdd = false;
+            $scope.responseMessage = "";
     		console.log("view data");
     		
     	}
@@ -33,12 +31,12 @@ angular.module('MainCtrl', []).controller('EmployeeController', function($scope,
     		console.log("update function selected");
     		
     	}
-    	if($scope.selectData == "Create"){
+    	if($scope.selectData == "Add"){
     		$scope.performAdd = true;
     		$scope.performUpdate = false;
     		$scope.performDelete = false;
     		$scope.view = false;
-    		console.log("update function selected");
+    		console.log("create function selected");
     		
     	}
     }
@@ -52,22 +50,39 @@ angular.module('MainCtrl', []).controller('EmployeeController', function($scope,
     }
 
     $scope.addEmployee = function(){
-    	$scope.reqData = {"name":$scope.addName,"email":$scope.addEmail,"dob":$scope.addDob,
-    					  "phone":$scope.addPhone,"designation":$scope.addDesignation};
-    	console.log($scope.reqData);
-    	EmpService.create($scope.reqData).then(function(response) {
-    			$scope.addMessgae = response.data;
-    			console.log(response);
-    		});
+        if($scope.addName != undefined && $scope.addEmail != undefined && $scope.addPhone != undefined){
+        	$scope.reqData = {"name":$scope.addName,"email":$scope.addEmail,"dob":$scope.addDob,
+        					  "phone":$scope.addPhone,"designation":$scope.addDesignation};
+        	console.log($scope.reqData);
+        	EmpService.create($scope.reqData).then(function(response) {
+        			$scope.responseMessage = response.data;
+        			alert($scope.responseMessage);
+                    $scope.fetchData(); 
+                    $scope.addEmail = "";
+                    $scope.addName = "";
+                    $scope.addPhone = "";
+                     $scope.addDesignation = "";
+                     $scope.addDob = "";  
+                     $timeout(function(){
+                        $scope.$apply();  
+                    },100);
+                     
+        		});
+        }else{
+            alert("some fields are empty");
+        }
     }
 
-    $scope.addEmployee = function(){
-        $scope.reqData = {"name":$scope.addName,"email":$scope.addEmail,"dob":$scope.addDob,
-    					  "phone":$scope.addPhone,"designation":$scope.addDesignation};
+    $scope.updateEmployee = function(id){
+        $scope.reqData = {"name":$scope.updateName,"email":$scope.updateEmail,"dob":$scope.updateDob,
+    					  "phone":$scope.updatePhone,"designation":$scope.updateDesignation};
     	console.log($scope.reqData);
-    	EmpService.create($scope.reqData).then(function(response) {
-    			$scope.addMessgae = response.data;
-    			console.log(response);
+    	EmpService.update(id,$scope.reqData).then(function(response) {
+    			$scope.responseMessage = response.data;
+    			alert($scope.responseMessage);
+                $scope.selectData = "View";
+                $scope.getValue();
+
     		});
     }	
     $scope.deleteEmployee = function(id){
@@ -75,8 +90,9 @@ angular.module('MainCtrl', []).controller('EmployeeController', function($scope,
 
     	EmpService.delete(id).then(function(response) {
     			$scope.responseMessage = response.data;
-    			console.log(response);
-    			$scope.$apply();
+    			alert($scope.responseMessage);
+                $scope.fetchData();
+    			//$scope.$apply();
     		});
     }
 

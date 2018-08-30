@@ -3,7 +3,7 @@ var app = angular.module('employPortalApp', ['ui.router', 'MainCtrl','EmpService
 
 app.config(function($stateProvider, $urlRouterProvider) {
 
-    $urlRouterProvider.otherwise('/emp');
+    $urlRouterProvider.otherwise('/employeePage');
     $urlRouterProvider.when('/', function($location, $state) {
             $state.go('employee');
         });
@@ -11,7 +11,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
     $stateProvider
 
         .state( 'employee', {
-                url: '/emp',
+                url: '/employeePage',
                 templateUrl: 'views/employeePortal.html',
                 controller: 'EmployeeController'
             } );

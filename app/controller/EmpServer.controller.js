@@ -12,7 +12,8 @@ exports.create = (req, res) => {
 	  designation: req.body.designation
 	}).then(employee => {		
 		// Send created customer to client
-		res.send(employee);
+		//res.send(employee);
+		res.status(200).send("employee created successfully ...");
 	});
 };
  

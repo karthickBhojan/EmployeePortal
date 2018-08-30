@@ -1,67 +1,76 @@
-<div class="container">
-  <h2>Employee portal:</h2>
-  <p></p>
+<div class="employee-portal-section">
+  <h2 class="main-title">Employee portal:</h2>
     <div class="form-group">
-      <label for="sel1">Action:</label>
-      <select class="form-control" id="sel1" ng-model="selectData" ng-change="getValue()">
-        <option>Create</option>
-        <option>View</option>
-        <option>Delete</option>
-        <option>Update</option>
-      </select>
+      <h4>Kindly select any of the option from the action dropdown box.</h4>
+      <label class="col-md-4 action-label" for="sel1">Action:</label>
+      <div class="col-md-8">
+        <select class="form-control" id="sel1" ng-model="selectData" ng-change="getValue()">
+          <option>Add</option>
+          <option>View</option>
+          <option>Delete</option>
+          <option>Update</option>
+        </select>
+      </div>
       <br>
     </div>
-</div>
-<div class="container">
-  <h2>{{responseMessage}}</h2>
-  <h2>Employee Table</h2>  
-  <table class="table">
-    <thead>
-      <tr>
-        <th>Index</th>
-        <th>Name</th>
-        <th>DOB</th>
-        <th>Email</th>
-		<th>Phone</th>
-        <th>Designation</th>
-		<th ng-if="!view">Action</th>
+  <div class="emp-table-section" ng-if="selectData != ' ' && selectData != undefined">
+    <h2>Employee Table</h2>  
+    <table class="table">
+      <thead>
+        <tr>
+          <th ng-if="!performAdd">Index</th>
+          <th>Name</th>
+          <th>DOB</th>
+          <th>Email</th>
+  		<th>Phone</th>
+          <th>Designation</th>
+  		<th ng-if="!view">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="add" ng-if="performAdd" ng-controller="EmployeeController">
+          <td><input type="text" class="form-control" name="addName"  ng-model="addName" id="addName"></td>
+          <td><input type="date" class="form-control" ng-model="addDob" id="adddob"></td>
+          <td><input type="text" class="form-control" ng-model="addEmail" id="addEmail"></td>
+      <td><input type="number" class="form-control" ng-model="addPhone" id="addPhone"></td>
+      <td><input type="text" class="form-control" ng-model="addDesignation" id="addDesignation"></td>
+      <td><button type="button" class="btn btn-primary"  ng-click="addEmployee();">ADD</button></td>
+        </tr>
+        <tr class="add" ng-if="performAdd" ng-repeat="emp in empList">
+          <td>{{$index+1}}</td>
+          <td>{{emp.name}}</td>
+          <td>{{emp.dob}}</td>
+          <td>{{emp.email}}</td>
+          <td>{{emp.phone}}</td>
+          <td>{{emp.designation}}</td>
+        </tr>
+        <tr class="view" ng-if="view" ng-repeat="emp in empList">
+          <td>{{$index+1}}</td>
+          <td>{{emp.name}}</td>
+          <td>{{emp.dob}}</td>
+          <td>{{emp.email}}</td>
+  		<td>{{emp.phone}}</td>
+  		<td>{{emp.designation}}</td>
+        </tr>
+  	  <tr class="delete" ng-if="performDelete" ng-repeat="emp in empList">
+          <td>{{$index+1}}</td>
+          <td>{{emp.name}}</td>
+          <td>{{emp.dob}}</td>
+          <td>{{emp.email}}</td>
+  		    <td>{{emp.phone}}</td>
+  		    <td>{{emp.designation}}</td>
+  		    <td><button type="button" class="btn btn-danger" ng-click="deleteEmployee(emp.id);">Delete</button></td>
+        </tr>
+  	  <tr class="update" ng-if="performUpdate" ng-controller="EmployeeController" ng-repeat="emp in empList">
+          <td>{{$index+1}}</td>
+          <td><input type="text" ng-init="updateName = emp.name" class="form-control" id="updateName" ng-model="updateName" value={{emp.name}}></td>
+          <td><input type="text" ng-init="updateDob = emp.dob" class="form-control" id="updateDob" ng-model="updateDob" value={{emp.dob}}></td>
+          <td><input type="text" ng-init="updateEmail = emp.email" class="form-control" id="updateEmail" ng-model="updateEmail" value={{emp.email}}></td>
+  		    <td><input type="text" ng-init="updatePhone = emp.phone" class="form-control" id="updatePhone" ng-model="updatePhone" value={{emp.phone}}></td>
+  		    <td><input type="text" ng-init="updateDesignation = emp.designation" class="form-control" id="updateDesignation" ng-model="updateDesignation" value={{emp.designation}}></td>
+  		    <td><button type="button" class="btn btn-primary" ng-click="updateEmployee(emp.id);">update</button></td>
       </tr>
-    </thead>
-    <tbody>
-      <tr class="view" ng-if="view" ng-repeat="emp in empList">
-        <td>{{$index+1}}</td>
-        <td>{{emp.name}}</td>
-        <td>{{emp.dob}}</td>
-        <td>{{emp.email}}</td>
-		<td>{{emp.phone}}</td>
-		<td>{{emp.designation}}</td>
-      </tr>
-	  <tr class="delete" ng-if="performDelete" ng-repeat="emp in empList">
-        <td>{{$index+1}}</td>
-        <td>{{emp.name}}</td>
-        <td>{{emp.dob}}</td>
-        <td>{{emp.email}}</td>
-		    <td>{{emp.phone}}</td>
-		    <td>{{emp.designation}}</td>
-		    <td><button type="button" class="btn btn-default" ng-click="deleteEmployee(emp.id);">Delete</button></td>
-      </tr>
-	  <tr class="update" ng-if="performUpdate" ng-repeat="emp in empList">
-        <td>{{$index+1}}</td>
-        <td><input type="text" class="form-control" id="usr" value={{emp.name}}></td>
-        <td><input type="text" class="form-control" id="usr" value={{emp.dob}}></td>
-        <td><input type="text" class="form-control" id="usr" value={{emp.email}}></td>
-		<td><input type="text" class="form-control" id="usr" value={{emp.phone}}></td>
-		<td><input type="text" class="form-control" id="usr" value={{emp.designation}}></td>
-		<td><button type="button" class="btn btn-default" ng-click="updateEmployee();">update</button></td>
-      </tr>
-	  <tr class="add" ng-if="performAdd">
-        <td><input type="text" class="form-control" name="addName" ng-model="addName" id="addName"></td>
-        <td><input type="text" class="form-control" ng-model="addDob" id="adddob"></td>
-        <td><input type="text" class="form-control" ng-model="addEmail" id="addEmail"></td>
-		<td><input type="text" class="form-control" ng-model="addPhone" id="addPhone"></td>
-		<td><input type="text" class="form-control" ng-model="addDesignation" id="addDesignation"></td>
-		<td><button type="button" class="btn btn-default" ng-model="addButton" ng-click="addEmployee();">ADD</button></td>
-      </tr>
-    </tbody>
-  </table>
+      </tbody>
+    </table>
+  </div>
 </div>

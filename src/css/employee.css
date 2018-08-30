@@ -1,0 +1,16 @@
+.main-title{
+	text-align: center;
+	text-decoration: underline;
+}
+.form-group{
+	padding-top: 10%;
+}
+.form-group > h4{
+	padding-bottom: 3%;
+}
+.action-label{
+	text-align: center;
+}
+.emp-table-section{
+	padding-top: 5%;
+}

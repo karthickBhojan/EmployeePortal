@@ -13,8 +13,8 @@ angular.module('EmpService', []).factory('EmpService', ['$http', function($http)
             return $http.post('/api/employee/add', reqData);
         },
 
-        update : function(reqData) {
-            return $http.post('/api/employee/update/', reqData);
+        update : function(id,reqData) {
+            return $http.put('/api/employee/update/' +id, reqData);
         },
 
         // call to DELETE a nerd
